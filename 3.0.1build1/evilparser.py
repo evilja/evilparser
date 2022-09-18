@@ -10,6 +10,31 @@ class crystal:
         createVar = "vex type name;\n"
         createVal = "spec value;\n"
         return [createVar, createVal]
+    def remove(self, path, vexName):
+        with open(path, "r") as f:
+            lines = f.readlines()
+        with open(path, "w") as f:
+            inVex = False
+            popno = 0
+            for line in lines:
+                if "vex" in line and vexName in line:
+                    inVex = True
+                    lines.pop(popno)
+                    popno += 1
+                    continue
+                if inVex and line.startswith("vex "):
+                    inVex = False
+                if inVex:
+                    lines.pop(popno)
+                popno += 1
+    def add(self,configfile,nameOfVar,typeofVar,valueOfVar):
+        with open(configfile,"a+") as f:
+            f.write("vex " + typeofVar + " " + nameOfVar + ";\n")
+            if type(valueOfVar) == list:
+                for x in valueOfVar:
+                    f.write("spec " + str(x) + ";\n")
+            else:
+                f.write("spec " + str(valueOfVar) + ";\n")
     def get(self, path):
         if not os.path.exists(path):
             raise Exception("Path does not exist")
