@@ -11,9 +11,9 @@ class crystal:
         createVal = "spec value;\n"
         return [createVar, createVal]
     def remove(self, path, vexName):
-        with open(path, "r") as f:
+        with open(path, mode="r", encoding='utf-8') as f:
             lines = f.readlines()
-        with open(path, "w") as f:
+        with open(path, mode="w", encoding='utf-8') as f:
             inVex = False
             popno = 0
             for line in lines:
@@ -28,7 +28,7 @@ class crystal:
                     lines.pop(popno)
                 popno += 1
     def add(self,configfile,nameOfVar,typeofVar,valueOfVar):
-        with open(configfile,"a+") as f:
+        with open(configfile, mode="a+", encoding='utf-8') as f:
             f.write("vex " + typeofVar + " " + nameOfVar + ";\n")
             if type(valueOfVar) == list:
                 for x in valueOfVar:
