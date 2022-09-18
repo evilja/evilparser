@@ -5,6 +5,8 @@ class crystal:
         config = {
 
                 }
+        _DIDYOUMEAN_HARDNESS = 5
+        self._DIDYOUMEAN_HARDNESS = _DIDYOUMEAN_HARDNESS
         self.config = config
     def syntax(self) -> "Syntax of Parser, Used by Parser Version Changer":
         createVar = "vex type name;\n"
@@ -31,7 +33,8 @@ class crystal:
         typesofvar =  ["int","integer","float","double","String","char*", "bool", "boolean", "char[]","char[]*","char*[]","int[]","int[]*","int*[]","float[]","float[]*","float*[]","bool[]","bool[]*","bool*[]","void","void(*)","json","jsob","json*","dict"]
         print("Could not find variable type \033[0;31m" + typeofvar + "\033[0m")
         g_01 = typesofvar
-        for i in range(2):
+        typeofvar = typeofvar.lower()
+        for i in range(self._DIDYOUMEAN_HARDNESS):
             for letter in typeofvar:
                 for x in g_01:
                     if not letter in x:
@@ -41,13 +44,16 @@ class crystal:
         print("\033[1;33mDid you mean one of these\033[0m: " , end="")
         fp = 0
         for g in g_01:
-            if fp == 0:
+            fp += 1
+            if fp == 1 and not len(g_01) == 1:
                 g = "\033[32m" + g + "\033[0m"
-            elif fp == len(g_01) - 1:
-                g = " \033[0mor \033[32m" + g + "\033[0m?\n"
+            elif g_01.index(g) + 1 == len(g_01):
+                if len(g_01) == 1:
+                    g = "\033[32m" +g + "\033[0m?\n"
+                else:
+                    g = " \033[0mor \033[32m" + g + "\033[0m?\n"
             else:
                 g = "\033[0m, \033[32m" + g
-            fp += 1
             print(g, end="")
         exit()
 
