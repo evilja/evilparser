@@ -1,16 +1,16 @@
 import os,json
 
 class crystal:
-    def __init__(self):
+    def __init__(self) -> "Create Crystal Object":
         config = {
 
                 }
         self.config = config
-    def syntax(self):
+    def syntax(self) -> "Syntax of Parser, Used by Parser Version Changer":
         createVar = "vex type name;\n"
         createVal = "spec value;\n"
         return [createVar, createVal]
-    def remove(self, path, vexName):
+    def remove(self, path:"Path to eparse file", vexName:"Name of the variable to remove") -> None: 
         with open(path, mode="r", encoding='utf-8') as f:
             lines = f.readlines()
         with open(path, mode="w", encoding='utf-8') as f:
@@ -27,7 +27,7 @@ class crystal:
                 if inVex:
                     lines.pop(popno)
                 popno += 1
-    def add(self,configfile,nameOfVar,typeofVar,valueOfVar):
+    def add(self,configfile:"Path to eparse file",nameOfVar:"Variable name to add",typeofVar:"Variable type to add",valueOfVar:"Variable value to add") -> None:
         with open(configfile, mode="a+", encoding='utf-8') as f:
             f.write("vex " + typeofVar + " " + nameOfVar + ";\n")
             if type(valueOfVar) == list:
@@ -35,7 +35,7 @@ class crystal:
                     f.write("spec " + str(x) + ";\n")
             else:
                 f.write("spec " + str(valueOfVar) + ";\n")
-    def get(self, path):
+    def get(self, path:"Path to eparse file") -> None:
         if not os.path.exists(path):
             raise Exception("Path does not exist")
         with open(path, mode="r", encoding='utf-8') as f:
@@ -121,6 +121,6 @@ class crystal:
                 print("unknown situation")
                 raise Exception("unknown situation")
         return self.config
-    def getVar(self, path, varname):
+    def getVar(self, path:"Path to eparse file", varname:"Name of the variable to get") -> "Variable":
         self.get(path)
         return self.config[varname]
